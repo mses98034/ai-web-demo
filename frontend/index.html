@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Toy Demo</title>
+  <meta charset="UTF-8">
+  <title>AI 圖片分類</title>
 </head>
 <body>
-  <h2>上傳圖片來預測</h2>
-  <input type="file" id="fileInput" />
-  <button onclick="upload()">上傳</button>
+  <h1>上傳圖片進行分類</h1>
+  <input type="file" id="imageInput" accept="image/*">
+  <button onclick="sendImage()">送出</button>
   <p id="result"></p>
 
   <script>
-    function upload() {
-      const fileInput = document.getElementById("fileInput");
+    async function sendImage() {
+      const input = document.getElementById('imageInput');
+      const file = input.files[0];
       const formData = new FormData();
-      formData.append("file", fileInput.files[0]);
+      formData.append('file', file);
 
-      fetch("https://your-backend-url.onrender.com/predict", {
-        method: "POST",
+      const res = await fetch('https://YOUR-RENDER-URL.onrender.com/predict', {
+        method: 'POST',
         body: formData
-      })
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("result").innerText = "預測結果：" + data.result;
       });
+      const data = await res.json();
+      document.getElementById('result').innerText = '預測結果：' + data.result;
     }
   </script>
 </body>

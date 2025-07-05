@@ -1,2 +1,6 @@
-gradio
-Pillow
+fastapi
+uvicorn
+python-multipart
+torch
+torchvision
+pillow
