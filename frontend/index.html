@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Toy Demo</title>
+</head>
+<body>
+  <h2>上傳圖片來預測</h2>
+  <input type="file" id="fileInput" />
+  <button onclick="upload()">上傳</button>
+  <p id="result"></p>
+
+  <script>
+    function upload() {
+      const fileInput = document.getElementById("fileInput");
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
+
+      fetch("https://your-backend-url.onrender.com/predict", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("result").innerText = "預測結果：" + data.result;
+      });
+    }
+  </script>
+</body>
+</html>
