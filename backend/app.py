@@ -1,22 +1,9 @@
-from fastapi import FastAPI, UploadFile, File
-from fastapi.middleware.cors import CORSMiddleware
+import gradio as gr
 from fake_model import predict_image
-import uvicorn
-
-app = FastAPI()
-
-# 允許前端跨域請求
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+demo = gr.Interface(
+    fn=predict_image,
+    inputs=gr.Image(type="pil"),
+    outputs="text"
 )
 
-@app.post("/predict")
-async def predict(file: UploadFile = File(...)):
-    img_bytes = await file.read()
-    result = predict_image(img_bytes)
-    return {"result": result}
-
-# 本地測試指令： uvicorn app:app --reload
+demo.launch()
